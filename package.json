@@ -1,0 +1,30 @@
+{
+  "name": "node-lesson-practice",
+  "version": "1.0.0",
+  "description": "peterLi practice",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PeterLimao/node-lesson-practice.git"
+  },
+  "keywords": [
+    "node-blog"
+  ],
+  "author": "peterLimao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PeterLimao/node-lesson-practice/issues"
+  },
+  "homepage": "https://github.com/PeterLimao/node-lesson-practice#readme",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "cheerio": "^0.20.0",
+    "ejs": "^2.4.1",
+    "eventproxy": "^0.3.4",
+    "express": "^4.13.4",
+    "superagent": "^1.7.2"
+  }
+}
