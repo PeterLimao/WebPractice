@@ -27,7 +27,7 @@ app.get('/reptile', function(req, res, next) {
 
         //监听40次回调
         ep.after('topic_html', topicUrls.length, function(topics) {
-
+            console.log(topics);
         });
 
         topicUrls.forEach(function(topic) {
