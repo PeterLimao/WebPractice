@@ -41,7 +41,7 @@ app.get('/reptile', function(req, res, next) {
             res.send(resArr);
         });
 
-        topicUrls.forEach(function(topicUrl) {
+        topicUrls.forEach(function(topicUrl, index) {
             superagent.get(topicUrl)
             .end(function(err, data) {
                 if (err) {
