@@ -9,13 +9,11 @@ var ep = new eventproxy();
 
 app.get('/reptile', function(req, res, next) {
     var condeUrl = req.query.url;
-
-    console.log(condeUrl);
     //爬取页面
     superagent.get(condeUrl)
     .end(function(err, sres) {
         if (err) {
-            console.log(err.message);
+            console.log('error is: ' + err.message);
         }
 
         var $ = cheerio.load(sres.text);
@@ -27,18 +25,33 @@ app.get('/reptile', function(req, res, next) {
 
         //监听40次回调
         ep.after('topic_html', topicUrls.length, function(topics) {
-            console.log(topics);
+            var resArr = [];
+            topics.forEach(function(topicObj) {
+                var topicUrl = topicObj[0];
+                var topicHtml = topicObj[1];
+                var $ = cheerio.load(topicHtml);
+                resArr.push({
+                    'title': $('.topic_full_title').text().trim(),
+                    'url': topicUrl,
+                    'author1': $('.user_info').eq(0).find('.dark').text().trim(),
+                    'comment1': $('.reply_content').eq(0).text().trim()
+                });
+            });
+
+            res.send(resArr);
         });
 
-        topicUrls.forEach(function(topic) {
-            superagent.get(topic)
+        topicUrls.forEach(function(topicUrl) {
+            superagent.get(topicUrl)
             .end(function(err, data) {
                 if (err) {
-                    console.log(err.message);
+                    console.log('error is: ' + err.message);
+                    console.log('error url is: ' + topicUrl);
                 }
+                //发送一次emit
+                ep.emit('topic_html', [topicUrl, data.text]);
             });
         });
-        res.send('ok');
     });
 });
 
