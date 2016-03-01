@@ -7,7 +7,8 @@ app.use(session({
     secret: 'recommand 128 bytes random string',
     cookie: {
         maxAge: 60 * 1000
-    }
+    },
+    resave: true
 }));
 
 app.get('/', function(req, res) {

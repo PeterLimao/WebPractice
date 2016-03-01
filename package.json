@@ -22,6 +22,7 @@
   "dependencies": {
     "body-parser": "^1.15.0",
     "cheerio": "^0.20.0",
+    "connect-redis": "^3.0.2",
     "cookie-parser": "^1.4.1",
     "ejs": "^2.4.1",
     "eventproxy": "^0.3.4",
