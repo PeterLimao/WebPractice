@@ -28,6 +28,7 @@
     "eventproxy": "^0.3.4",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "q": "^1.4.1",
     "superagent": "^1.7.2"
   }
 }
