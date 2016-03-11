@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <form action="#" id="registerForm">
+        <input name="username" type="text" placeholder="请输入账号"/><br/>
+        <input name="userpwd" type="password" placeholder="请输入密码"/><br/>
+        <input name="phonenumber" type="text" placeholder="请输入手机号码"/>
+        <button>提交</button>
+        <div id="error-msg">
+            
+        </div>
+    </form>
+    <script>
+        /**
+         * 策略对象
+         * @type {Object}
+         */
+        var validateStrategies = {
+            //不为空
+            isNonEmpty: function(value, errorMsg) {
+                if (value === '') {
+                    return errorMsg;
+                }
+            },
+            //限制最小宽度
+            minWidth: function(value, length, errorMsg) {
+                if(value.length < length) {
+                    return errorMsg;
+                }
+            },
+            isMobile: function(value, errorMsg) {
+                if (!/(^1[3|5|8][0-9]{9}$)/.test(value)) {
+                    return errorMsg;
+                }
+            }
+        };
+
+        /**
+         * 代理对象
+         * @return {[type]} [description]
+         */
+        var Validator = function() {
+            this.startegyArr = [];
+        };
+
+        Validator.prototype.add = function(dom, rule, errorMsg) {
+            var ruleArgs = rule.split(':');
+            this.startegyArr.push(function() {
+                var startegy = ruleArgs.shift();
+                //组成参数数组
+                ruleArgs.unshift(dom.value);
+                ruleArgs.push(errorMsg);
+                return validateStrategies[startegy].apply(this, ruleArgs);
+            });
+        };
+
+        Validator.prototype.start = function() {
+            for (var i = 0; i < this.startegyArr.length; i++) {
+                var errorMsg = this.startegyArr[i]();
+                if (errorMsg) {
+                    console.log(errorMsg);
+                    return errorMsg;
+                }
+            }
+        };
+
+        /**
+         * execute func
+         * @return {[type]} [description]
+         */
+        var validateFunc = function() {
+            var validator = new Validator();
+
+            validator.add(form.username, 'isNonEmpty', '不能为空');
+            validator.add(form.userpwd, 'minWidth:6', '最小为６位');
+            validator.add(form.phonenumber, 'isMobile', '请输入正确的手机号码');
+
+            return validator.start();
+        };
+
+        var form = document.getElementById('registerForm');
+        form.onsubmit = function() {
+            if (validateFunc()) return false;
+        };
+    </script>
+</body>
+</html>
