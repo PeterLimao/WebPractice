@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        div {
+            position: absolute;
+            background-color: blue;
+            width: 30px;
+            height: 30px;
+            border-radius: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div id="div">
+    </div>
+    <script>
+        var tween = {
+            /**
+             * linear
+             * @param  {Number} t [动画已经消耗的时间]
+             * @param  {Number} b [小球原始的位置]
+             * @param  {Number} c [小球目标的位置]
+             * @param  {Number} d [动画消耗的总时间]
+             * @return {Number} 需要移动的距离
+             */
+            linear: function(t, b, c, d) {
+                return c * t / d + b;
+            },
+            easeIn: function(t, b, c, d) {
+                return c * (t /= d) * t + b;
+            }
+        };
+
+        var Animate = function(dom) {
+            this.dom = dom;
+            this.startTime = 0;
+            this.startPos = 0;
+            this.endPos = 0;
+            this.propertyName = null;
+            this.easing = null;
+            this.duration = null;
+        };
+
+        /**
+         * start
+         * @param  {String} propertyName [改变的CSS属性名]
+         * @param  {Number} endPos       [需要移动到的位置]
+         * @param  {Number} duration     [持续时间]
+         * @param  {String} easing       [缓动策略]
+         */
+        Animate.prototype.start = function(propertyName, endPos, duration, easing) {
+            this.startTime = +new Date; //转换成时间戳
+            this.startPos = this.dom.getBoundingClientRect()[propertyName];
+            this.propertyName = propertyName;
+            this.endPos = endPos;
+            this.duration = duration;
+            this.easing = tween[easing];
+
+            var _self = this;
+            var t = setInterval(function() {
+                if (_self.step() === false) {
+                    clearInterval(t);
+                }
+            }, 19);
+        };
+
+        Animate.prototype.step = function() {
+            var t = +new Date;
+            if (t >= this.startTime + this.duration) {
+                this.update(this.endPos);
+                return false;
+            }
+            var pos = this.easing(t-this.startTime, this.startPos, this.endPos - this.startPos, this.duration);
+            this.update(pos);
+        };
+
+        Animate.prototype.update = function(pos) {
+            this.dom.style[this.propertyName] = pos + 'px';
+        };
+
+        var client = (function() {
+            var div = document.getElementById('div');
+            var animate = new Animate(div);
+            animate.start('left', 500, 2000, 'easeIn');
+        })();
+    </script>
+</body>
+</html>
