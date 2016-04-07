@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+    <script type="text/javascript">
+        var mult = function() {
+            var args = arguments;
+            var index = 1;
+            for (var i = 0; i < args.length; i++) {
+                index *= args[i];
+            }
+            return index;
+        };
+
+        console.log(mult(1, 2, 3, 10));
+    </script>
+</body>
+</html>

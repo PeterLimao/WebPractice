@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>httpProxy</title>
+</head>
+<body>
+    <input type="checkbox" id="id1">1
+    <input type="checkbox" id="id2">2
+    <input type="checkbox" id="id3">3
+    <input type="checkbox" id="id4">4
+    <input type="checkbox" id="id5">5
+    <input type="checkbox" id="id6">6
+    <script type="text/javascript">
+        var sendFile = function(id) {
+            console.log('send file: ' + id);
+        };
+
+        var sendFileProxy = (function() {
+            var cacheId = [];
+            var timer;
+
+            return function(id) {
+                cacheId.push(id);
+                if (timer) {
+                    return;
+                }
+
+                timer = setTimeout(function() {
+                    sendFile(cacheId.join(','));
+                    clearTimeout(timer);
+                    timer = null;
+                    cacheId.length = 0;
+                }, 2000);
+            }
+        })();
+
+        var checkbox = document.getElementsByTagName('input');
+        for (var i = 0; i < checkbox.length; i++) {
+            checkbox[i].onclick = function() {
+                sendFileProxy(this.id);
+            };
+        }
+    </script>
+</body>
+</html>
