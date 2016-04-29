@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+    <script>
+        var saleOffice = {};
+        saleOffice.clientList = {};
+
+        saleOffice.listen = function(key, fn) {
+            if (!this.clientList[key]) {
+                this.clientList[key] = [];
+            }
+            this.clientList[key].push(fn);
+        };
+
+        saleOffice.trigger = function() {
+            var key = Array.prototype.shift.call(arguments);
+            var fns = this.clientList[key];
+
+            if (!fns || fns.length === 0) {
+                return;
+            }
+
+            var fn = '';
+            for (var i = 0; i < fns.length; i++) {
+                fn = fns[i];
+                fn.apply(this, arguments);
+            }
+        };
+
+        saleOffice.listen('click', function(value) {
+            console.log('click:' + value);
+        });
+
+        saleOffice.listen('mouseover', function(value) {
+            console.log('mouseover: ' + value);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var Events = (function() {
+            var clientList = {};
+
+            var listen = function(key, fn) {
+                if (!clientList[key]) {
+                    clientList[key] = [];
+                }
+                clientList[key].push(fn);
+            };
+
+            var remove = function(key, fn) {
+                var fns = clientList[key];
+                if (!fns) {
+                    return;
+                }
+                if (!fn) {
+                    fns.length = 0;
+                } else {
+                    for (var i = 0; i < fns.length; i++) {
+                        if (fns[i] === fn) {
+                            fns.splice(i, 1);
+                        }
+                    }
+                }
+            };
+
+            var trigger = function() {
+                var key = Array.prototype.shift.call(arguments);
+                var fns = clientList[key];
+                if (!clientList[key]) {
+                    return;
+                }
+                var fn = '';
+                for (var i = 0; i < fns.length; i++) {
+                    fn = fns[i];
+                    fn.apply(this, arguments);
+                }
+            };
+
+            return {
+                listen: listen,
+                remove: remove,
+                trigger: trigger
+            };
+        })();
+
+        Events.listen('click', function(value) {
+            console.log('click: ' + value);
+        });
+    </script>
+</body>
+</html>
