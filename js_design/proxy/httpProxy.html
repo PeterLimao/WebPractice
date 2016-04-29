@@ -11,7 +11,18 @@
     <input type="checkbox" id="id4">4
     <input type="checkbox" id="id5">5
     <input type="checkbox" id="id6">6
+    <a href="javascript:void(0);" onclick="test();"> aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa </a>
     <script type="text/javascript">
+        var a = document.getElementsByTagName('a');
+        a.onclick = function() {
+            console.log(11111);
+            alert(1);
+        };
+
+        function test() {
+            alert(1);
+        }
+
         var sendFile = function(id) {
             console.log('send file: ' + id);
         };

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //内部迭代器
+        var each = function(arr, callback) {
+            for (var i = 0; i < arr.length; i++) {
+                callback(i, arr[i]);
+            }
+        };
+        //外部迭代器
+        var iterator = function(obj) {
+            var current = 0;
+
+            var next = function() {
+                current++;
+            };
+
+            var isDone = function() {
+                return current >= obj.length;
+            }
+
+            var getCurrentItem = function() {
+                return obj[current];
+            };
+
+            return {
+                next: next,
+                isDone: isDone,
+                getCurrentItem: getCurrentItem
+            }
+        }
+
+        var compare = function(iterator1, iterator2) {
+            while (!iterator1.isDone() && !iterator2.isDone()) {
+                if (iterator1.getCurrentItem() != iterator2.getCurrentItem()) {
+                    throw new Error('no equal!');
+                }
+                iterator1.next();
+                iterator2.next();
+            }
+
+            console.log('equal!');
+        };
+
+        var iterator1 = iterator([1, 2, 3, 4]);
+        var iterator2 = iterator([1, 2, 3, 4]);
+
+        compare(iterator1, iterator2);
+    </script>
+</body>
+</html>
