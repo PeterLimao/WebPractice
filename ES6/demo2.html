@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>解构赋值</title>
+</head>
+<body>
+    <script>
+        let arr = [1, 2, 3, 4, 5];
+
+        let [first, second, ...other] = arr;
+
+        let obj = {
+            name: 'limao',
+            age: 14
+        };
+
+        let {name, age} = obj;
+
+        console.log(other);
+        console.log(name);
+        console.log(age);
+
+        let ArrObj = [
+            {name: 'limao', age: 14},
+            {name: 'limao2', age: 15}
+        ]
+
+        for (let {name, age} of ArrObj) {
+            console.log(`name is ${name}`);
+            console.log(`age is ${age}`);
+        }
+    </script>
+</body>
+</html>

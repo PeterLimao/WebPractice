@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>不定参数</title>
+</head>
+<body>
+
+    <script>
+        var containAll = (base, ...params) => {
+            for (let param of params) {
+                if (base.indexOf(param) === -1) {
+                    return false;
+                }
+            }
+            return true;
+        };
+
+        window.containAll;
+    </script>
+</body>
+</html>

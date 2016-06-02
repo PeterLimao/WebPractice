@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>箭头函数</title>
+</head>
+<body>
+
+    <script>
+        let add = x => x + 1;
+        let sub = y => y * 2;
+
+        console.log(sub(add(2)));
+
+        let test = x => this;
+
+        console.log(test());
+
+        var each = function(array, callback) {
+            for (var i = 0; i < array.length; i++) {
+                callback(i, array[i]);
+            }
+        }
+
+        var testArr = [1, 2, 3, 4];
+
+        let go1 = {
+            add() {
+                each(testArr, function() {
+                    console.log(this);
+                })
+            }
+        };
+
+        var go2 = {
+            add() {
+                each(testArr, () => {
+                    console.log(this);
+                })
+            }
+        };
+
+
+    </script>
+</body>
+</html>
