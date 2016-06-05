@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类</title>
+</head>
+<body>
+    <script>
+        function Circle(radius) {
+            this.radius = radius;
+            Circle.circleMade++;
+        }
+
+        Object.defineProperty(Circle, 'circleMade', {
+            get: function() {
+                return !this._count ? 0 : this._count;
+            },
+            set: function(val) {
+                this._count = val;
+            }
+        })
+    </script>
+</body>
+</html>
