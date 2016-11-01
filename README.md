@@ -5,3 +5,5 @@ Web前端学习的一些练习
 
 - jsDesign 参考书籍《JavaScript设计模式与开发实践》
 - HTML5AndCSS3 参考书籍《Html5 Css3实例教程》
+- FP 参考书籍 《js函数式编程》
+
